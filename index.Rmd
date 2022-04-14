@@ -1,0 +1,267 @@
+---
+title: "An Intro to Cloud Computing"
+subtitle: "<span style = 'font-size: 50%;'>*TBD*</span>"
+author: "Sam Csik | Data Training Coordinator<br><span style = 'font-size: 65%;'>National Center for Ecological Analysis & Synthesis<br></span>"
+date: "<span style = 'font-size: 85%;'>Master of Environmental Data Science | Spring 2022</span><br><span style = 'font-size: 65%;'>Slides & source code available on [GitHub](https://github.com/UCSB-MEDS/cloud-computing)</span>"
+output:
+  xaringan::moon_reader:
+    css: ['xaringan-themer.css', 'my-css.css']
+    seal: false
+    nature:
+      countIncrementalSlides: false
+      titleSlideClass: ["left", "middle", "inverse"]
+      highlightLines: true
+      highlightStyle: github
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width = 9, fig.height = 3.5, fig.retina = 3,
+  out.width = "100%",
+  cache = FALSE,
+  echo = TRUE,
+  message = FALSE, 
+  warning = FALSE,
+  hiline = TRUE
+)
+```
+
+```{r xaringan-themer, include = FALSE, warning = FALSE}
+# load package
+library(xaringanthemer)
+
+# set accent theme
+style_mono_accent(
+  header_font_google = google_font("Nunito Sans"), # Sanchez
+  text_font_google = google_font("Glacial Indifference", "300", "300i"),
+  code_font_google = google_font("Fira Mono"),
+  base_color = "#05859B",
+  white_color = "#93C6C2", 
+  background_color = "#FFFFFF",
+  link_color = "#9b0546",
+  text_bold_color = "#05859B",
+  header_font_weight = 400,
+  header_h1_font_size = "2.25rem",
+  header_h2_font_size = "1.75rem",
+  header_h3_font_size = "1.5rem",
+  footnote_font_size = "0.7em",
+)
+```
+
+class: inverse, middle
+
+# `r fontawesome::fa("cloud", fill = "#93C6C2", a11y = "sem")` An Intro to Cloud Computing 
+
+<br>
+
+<span style = 'font-size: 130%;'>Sam Csik | Data Training Coordinator</span>  
+
+National Center for Ecological Analysis & Synthesis<br>
+
+<br>
+
+<span style = 'font-size: 130%;'>Master of Environmental Data Science | Spring 2021</span>   
+
+Slides & source code available on [`r fontawesome::fa("github", fill = "#93C6C2", a11y = "sem")`](https://github.com/UCSB-MEDS/teach-me-how-to-google)
+
+---
+class: inverse, middle, center
+
+## `r fontawesome::fa("cloud", fill = "#93C6C2", a11y = "sem")` What is cloud computing?
+
+The buzzword we all hear, but maybe don't quite understand
+
+---
+### Cloud computing is a lot of things...
+
+<span style = 'font-size: 85%;'>*...but generally speaking:*</span>
+
+<span style = 'font-size: 85%;'>`r fontawesome::fa("wifi", fill = "#05859B", a11y = "sem")` Cloud computing is the delivery of on-demand computer resources over the internet (i.e. "the cloud")</span>
+
+<span style = 'font-size: 85%;'>`r fontawesome::fa("server", fill = "#05859B", a11y = "sem")` "The Cloud" isn't just an invisible entity -- it's powered by a network of data centers, found globally, which house the hardware (servers), power and backup systems, etc. These data centers and infrastructure are managed by  cloud providers</span>
+
+<span style = 'font-size: 85%;'>`r fontawesome::fa("dollar-sign", fill = "#05859B", a11y = "sem")` Cloud computing services are typically offered using a "pay-as-you-go" pricing model, which reduces capital expenses</span>
+
+.center[
+```{r, out.width = '60%', out.height = '60%', echo = FALSE, fig.alt = ""}
+knitr::include_graphics("media/cloud.png")
+```
+]
+
+.footnote[
+<span style = 'font-size: 80%;'>Check out this article by Ingrid Burrington in The Atlantic, [Why Amazon's Data Centers are Hidden in Spy Country](https://www.theatlantic.com/technology/archive/2016/01/amazon-web-services-data-center/423147/), for some interesting insight into one of the largest cloud provider's data centers.</span>
+]
+
+---
+### There are a lots of different cloud computing platforms, but the big ones are:
+
+`r fontawesome::fa("angle-right", fill = "#05859B", a11y = "sem")` [Amazon Web Services](https://aws.amazon.com/what-is-cloud-computing/) (AWS)
+`r fontawesome::fa("angle-right", fill = "#05859B", a11y = "sem")` [Google Cloud Platform](https://cloud.google.com/) (GCP)
+`r fontawesome::fa("angle-right", fill = "#05859B", a11y = "sem")` [Microsoft Azure](https://azure.microsoft.com/en-us/)
+
+<br>
+
+.center[
+```{r, out.width = '80%', out.height = '80%', echo = FALSE, fig.alt = ""}
+knitr::include_graphics("media/cloud_platforms.png")
+```
+]
+
+<span style = 'font-size: 70%;'>There are *many* other cloud service providers that offer varying degrees of infrastructure, ease of use, and cost. Check out [DigitalOcean](digitalocean.com), [Kamatera](https://www.kamatera.com/), and [Vultr](https://mamboserver.link/vultr) to start.</span>
+
+---
+### Cloud Service and Deployment Models
+
+<span style = 'font-size: 80%;'>`r fontawesome::fa("server", fill = "#05859B", a11y = "sem")` **Service Models:** When you work in "the cloud" you're using resources -- including servers, storage, networks, applications, services, (and more!) -- from a very large resource pool that is managed by you or the cloud service provider. Three cloud service models describe to what extent your resources are managed by yourself or by your cloud service providers.</span>
+
+* <span style = 'font-size: 80%;'>**Infrastructure as a Service (IaaS)**</span>
+* <span style = 'font-size: 80%;'>**Platform as a Service (PaaS)**</span>
+* <span style = 'font-size: 80%;'>**Software as a Service (SaaS)**</span>
+
+<span style = 'font-size: 80%;'>`r fontawesome::fa("rocket", fill = "#05859B", a11y = "sem")` **Deployment Models:** Cloud deployment models describe the type of cloud environment based on ownership, scale, and access.</span>
+
+* <span style = 'font-size: 80%;'>**Private Cloud**</span>
+* <span style = 'font-size: 80%;'>**Public Cloud**</span>
+* <span style = 'font-size: 80%;'>**Hybrid Cloud**</span>
+
+---
+### Service Models 
+
+<span style = 'font-size: 70%;'>`r fontawesome::fa("angle-right", fill = "#05859B", a11y = "sem")` **Infrastructure as a Service (IaaS)** provides users with computing resources like processing power, data storage capacity, and networking. IaaS platforms offer an alternative to on-premise physical infrastructure, which can be costly and labor-intensive. In comparison, IaaS platforms are more cost-effective (pay-as-you-go), flexible, and scalable.</span>
+
+<span style = 'font-size: 70%;'>One example of IaaS is [Amazon EC2](https://aws.amazon.com/ec2/), which allows users to rent virtual computers on which to run their own computer applications (e.g. R/RStudio).</span>
+
+--
+
+<span style = 'font-size: 70%;'>`r fontawesome::fa("angle-right", fill = "#05859B", a11y = "sem")` **Platform as a Service (PaaS)** provides developers with a framework and tools for creating unique applications and software. A benefit of SaaS is that developers don't need to worry about managing servers and underlying infrastructure (e.g. managing software updates or security patches). Rather, they can focus on the development, testing, and deploying of their application/software.</span>
+
+<span style = 'font-size: 70%;'>One example of SaaS is [AWS Lambda](https://aws.amazon.com/lambda/), a serverless, event-driven compute service that lets you run code for virtually any type of application or backend service without provisioning or managing servers.</span>
+
+--
+
+<span style = 'font-size: 70%;'>`r fontawesome::fa("angle-right", fill = "#05859B", a11y = "sem")` **Software as a Service (SaaS)** makes software available to users via the internet. With SaaS, users don't need to install and run software on their computers. Rather, they can access everything they need over the internet by logging into their account(s). The software/application owner does not have any control over the backend except for application-related management tasks.</span>
+
+<span style = 'font-size: 70%;'>Some examples of SaaS applications include [Dropbox](https://www.dropbox.com/), [Slack](https://slack.com/), and [DocuSign](https://www.docusign.com/).</span>
+
+---
+### An Analogy: Pizza as a Service
+
+<br>
+
+.center[
+```{r, out.width = '80%', out.height = '80%', echo = FALSE, fig.alt = ""}
+knitr::include_graphics("media/pizza.png")
+```
+
+.center[
+<span style = 'font-size: 70%;'>Image Source: David Ng, Oursky</span>
+]
+
+]
+
+???
+
+* Made in House (On-premise): Choose all your pizza ingredients and make it from scratch, you will also want complete control of all the tools in your kitchen: the oven that has the exact settings and capabilities you want, the pizza stone many places don’t have, or let your dough sit overnight at the most optimal corner of your fridge. In real world, sometimes the effort is necessary if you can’t find a service that will let you customize for that one essential deployment setting, such as a firewall configuration or that specific network setting requirements.
+* Kitchen as a Service (IaaS): Like buying your own ingredients to prepare exactly the pizza you want, with the specific brands you like. But you don’t have to worry about the oven, rolling pin, whether you counter is big enough, or the pizza cutter. You have absolute control on what pizza you are going to make, but maybe the rental kitchen doesn’t have every type of tool you want.
+* Walk in and Bake (PaaS): Like walking into a kitchen with a ready-to-cook package of ingredients. IaaS and PaaS are when you want to make your own pizza, but you don’t need to worry about buying ingredients, prep work, or having the right tools. You can focus on rolling out the dough, assembling the pre-washed ingredients to your taste and factors like size and thickness before sticking it into someone’s provided oven.
+* Pizza as a Service (SaaS): enjoy a fully-finished product (pizza) after ordering; you call the pizza delivery so the pizza is already designed, prepared and baked by somebody else and arrives hot and ready to eat.
+
+---
+### Deployment Models
+
+<span style = 'font-size: 80%;'>`r fontawesome::fa("bus", fill = "#05859B", a11y = "sem")` **Public Cloud:** The cloud infrastructure is made available to the general public over the internet and is owned by a cloud provider. The resources are shared among all users. With this model, users are only billed for the resources they use.</span>
+
+<span style = 'font-size: 80%;'>You can think of the **public cloud** as a **bus** -- it's accessible to everyone and you only pay for your seat/the time you're actually riding it.</span>
+
+--
+
+<span style = 'font-size: 80%;'>`r fontawesome::fa("car", fill = "#05859B", a11y = "sem")` **Private Cloud:** The cloud infrastructure and resources are dedicated to a single organization.</span>
+
+<span style = 'font-size: 80%;'>You can think of the **private cloud** as buying your own **car** -- you incur a larger up-front cost, but it's available only for you to use.</span>
+
+--
+
+<span style = 'font-size: 80%;'>`r fontawesome::fa("trailer", fill = "#05859B", a11y = "sem")` **Hybrid Cloud:** This model includes aspects of both private and public cloud deployment models -- meaning a company might be using the public cloud but also owns on-premise systems (or private cloud infrastructure) and there is a connection between the two.</span>
+
+<span style = 'font-size: 80%;'>You can think of a **hybrid cloud** as a U-Haul **trailer** -- you have your own vehicle, but need additional, temporary capacity for your move or a road trip.</span>
+
+---
+class: inverse, middle, center
+
+### `r fontawesome::fa("question", fill = "#93C6C2", a11y = "sem")` Soooo...when should I use cloud computing?
+
+Well, it depends.
+
+---
+### It depends on your goals, needs, and budget...but the possibilities are pretty limitless
+
+<span style = 'font-size: 90%;'>Basically, anything that you'd want to use a computer for, you can do using cloud computing services:</span> 
+
+* <span style = 'font-size: 80%;'>Big data analytics</span> 
+* <span style = 'font-size: 80%;'>Cloud storage</span> 
+* <span style = 'font-size: 80%;'>Disaster recovery</span> 
+* <span style = 'font-size: 80%;'>Data backup</span> 
+* <span style = 'font-size: 80%;'>Machine learning</span> 
+* <span style = 'font-size: 80%;'>Web and mobile app development</span> 
+* <span style = 'font-size: 80%;'>Networking & content delivery</span> 
+* <span style = 'font-size: 80%;'>Security & identity management</span> 
+* <span style = 'font-size: 80%;'>and more!</span> 
+
+---
+class: inverse, middle, center
+
+### `r fontawesome::fa("aws", fill = "#93C6C2", a11y = "sem")` But where are *we* going to start?
+
+Let's learn how to configure and launch an Amazon EC2 instance (i.e. virtual server) that can run R & RStudio!
+
+Cool, cool. What the heck does any of that mean?
+
+---
+## What is Amazon EC2?
+
+.center[
+<iframe width="520" height="415" src="https://www.youtube.com/embed/TsRBftzZsQo" frameborder="0" allowfullscreen></iframe>
+]
+
+---
+class: inverse, middle, center
+
+### `r fontawesome::fa("grip-lines-vertical", fill = "#93C6C2", a11y = "sem")` A use case: parallelizing your code using cloud-based services
+
+REVISIT THIS SLIDE
+To do this, we'll launch an `r fontawesome::fa("aws", fill = "#93C6C2", a11y = "sem")` EC2 instance that runs R & RStudio
+
+---
+### Imagine....
+
+Imagine you have a lot of data...some of you may already be familiar with this ;) Your analyses might take a looonnggg time to run on your local computer. 
+
+You can take advantage of more of your computers cores by running your code in parallel (rather than serially, which is R's default). but sometimes you need even MORE processing power.
+
+You can leverage cloud infrastructure to gain access to even greater computing power! (similar to Taylor)
+
+A way to do that is to launch an Amazon EC2 Instance, or *virtual machine* that has many more cores than your own personal computer (similar to Taylor)
+
+---
+class: inverse, middle, center
+
+### `r fontawesome::fa("grip-lines-vertical", fill = "#93C6C2", a11y = "sem")` A use case: parallelizing your code using cloud-based services
+
+---
+### What is parallel processing?
+
+---
+### When should I parallelize my code?
+
+---
+### How do I parallelize my code?
+
+
+
+
+
+
+
