@@ -117,15 +117,15 @@ knitr::include_graphics("media/cloud_platforms.png")
 
 <span style = 'font-size: 80%;'>`r fontawesome::fa("server", fill = "#05859B", a11y = "sem")` **Service Models:** When you work in "the cloud" you're using resources -- including servers, storage, networks, applications, services, (and more!) -- from a very large resource pool that is managed by you or the cloud service provider. Three cloud service models describe to what extent your resources are managed by yourself or by your cloud service providers.</span>
 
-* <span style = 'font-size: 80%;'>**Infrastructure as a Service (IaaS)**</span>
-* <span style = 'font-size: 80%;'>**Platform as a Service (PaaS)**</span>
-* <span style = 'font-size: 80%;'>**Software as a Service (SaaS)**</span>
+<span style = 'font-size: 80%;'>`r fontawesome::fa("angle-right", fill = "#05859B", a11y = "sem")` Infrastructure as a Service (IaaS)</span>  
+<span style = 'font-size: 80%;'>`r fontawesome::fa("angle-right", fill = "#05859B", a11y = "sem")` Platform as a Service (PaaS)</span>  
+<span style = 'font-size: 80%;'>`r fontawesome::fa("angle-right", fill = "#05859B", a11y = "sem")` Software as a Service (SaaS)</span>  
 
 <span style = 'font-size: 80%;'>`r fontawesome::fa("rocket", fill = "#05859B", a11y = "sem")` **Deployment Models:** Cloud deployment models describe the type of cloud environment based on ownership, scale, and access.</span>
 
-* <span style = 'font-size: 80%;'>**Private Cloud**</span>
-* <span style = 'font-size: 80%;'>**Public Cloud**</span>
-* <span style = 'font-size: 80%;'>**Hybrid Cloud**</span>
+<span style = 'font-size: 80%;'>`r fontawesome::fa("angle-right", fill = "#05859B", a11y = "sem")` Private Cloud</span>  
+<span style = 'font-size: 80%;'>`r fontawesome::fa("angle-right", fill = "#05859B", a11y = "sem")` Public Cloud</span>  
+<span style = 'font-size: 80%;'>`r fontawesome::fa("angle-right", fill = "#05859B", a11y = "sem")` Hybrid Cloud</span>  
 
 ---
 ### Service Models 
@@ -241,7 +241,7 @@ Cool, cool. What the heck does any of that mean?
 <br>
 
 .center[
-<span style = 'font-size: 100%;'>[Here are my instructions for launch an Amazon EC2 instance to run R & RStudio.](https://docs.google.com/document/d/1Bxp7OMq1_d1l7sMD7qoh8c8cA0rhYIGx-nr4IchH98E/edit?usp=sharing) If you have suggestions on how to improve these instructions and/or correct any potential misinformation, please [file a issue on GitHub](https://github.com/UCSB-MEDS/cloud-computing/issues).</span> 
+<span style = 'font-size: 100%;'>[Here are my instructions for launching an Amazon EC2 instance to run R & RStudio.](https://docs.google.com/document/d/1Bxp7OMq1_d1l7sMD7qoh8c8cA0rhYIGx-nr4IchH98E/edit?usp=sharing) If you have suggestions for how to improve these instructions and/or correct any potential misinformation, please [file a issue on GitHub](https://github.com/UCSB-MEDS/cloud-computing/issues).</span> 
 
 ]
 
