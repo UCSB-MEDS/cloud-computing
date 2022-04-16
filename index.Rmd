@@ -253,11 +253,10 @@ class: inverse, middle, center
 ---
 ### Slow code is less fun
 
-Big data? Computationally-intensive workflows? Maybe you've been here before...?
-
 .center[
 .center2[
-```{r, out.width = '80%', out.height = '80%', echo = FALSE, fig.alt = ""}
+Big data? Computationally-intensive workflows? Maybe you've been here before...?
+```{r, out.width = '100%', out.height = '100%', echo = FALSE, fig.alt = ""}
 knitr::include_graphics("media/sloth.gif")
 ```
 ]
