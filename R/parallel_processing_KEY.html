@@ -1513,14 +1513,16 @@ div.tocify {
 </div>
 
 
-<p><em>The following code and content was borrowed/adapted from Danielle
-Ferraro’s R-Ladies SB workshop, <a href="https://danielleferraro.github.io/rladies-sb-parallel/#1">A Gentle
+<p><em>Much of the following code and content was borrowed/adapted from
+Danielle Ferraro’s R-Ladies SB workshop, <a href="https://danielleferraro.github.io/rladies-sb-parallel/#1">A Gentle
 Introduction to Parallel Processing in R</a>…who borrowed code/exercises
 from Grant McDermott’s lecture notes, <a href="https://raw.githack.com/uo-ec607/lectures/master/12-parallel/12-parallel.html">Parallel
-programming</a>. Thanks to both Grant and Danielle for putting together
-some awesome teaching resources!</em></p>
-<div id="things-to-remember-before-we-get-started" class="section level3">
-<h3>Things to remember before we get started:</h3>
+programming</a>. Code in part III (Using the <code>{foreach}</code>
+package), also comes from Blas M. Benito’s blog post, <a href="https://www.blasbenito.com/post/02_parallelizing_loops_with_r/">Parallelized
+loops with R</a>. Thanks to Danielle, Grant, and Blas for putting
+together some awesome teaching resources!</em></p>
+<div id="things-to-remember-before-getting-started" class="section level3">
+<h3>Things to remember before getting started</h3>
 <ul>
 <li><p><strong>Use parallel processing when</strong> (a) your task is
 embarrassingly parallel i.e. if your analysis could easily be separated
@@ -1549,13 +1551,15 @@ operating systems and in IDEs</p></li>
 <h3>0. Install &amp; load packages</h3>
 <div id="install-packages-if-needed" class="section level4">
 <h4>Install packages (if needed)</h4>
-<pre class="r"><code># install.packages(c(&quot;tictoc&quot;, &quot;foreach&quot;, &quot;doParallel&quot;, &quot;furrr&quot;, &quot;future.apply&quot;))</code></pre>
+<pre class="r"><code># install.packages(c(&quot;tidyverse&quot;, &quot;tictoc&quot;, &quot;foreach&quot;, &quot;doParallel&quot;))</code></pre>
 </div>
 <div id="load-packages" class="section level4">
 <h4>Load packages</h4>
 <pre class="r"><code>library(tidyverse) # for some data wrangling
 library(tictoc) # for timing how long our code takes to run
-library(parallel) # a base R package for parallel processing</code></pre>
+library(parallel) # a base R package that supplies parallel versions of the `apply` functions
+library(foreach) # allow for parallelization of for loops
+library(doParallel) # provides `parallel` backend; used in conjunction with `foreach`; `{doFuture}` provides the futures backend</code></pre>
 </div>
 </div>
 <div id="i.-create-a-sloowwww-function-for-testing" class="section level3">
@@ -1575,14 +1579,6 @@ frame, then put R to sleep for 2 seconds.</p>
 <h3>II. Using the <code>{parallel}</code> package</h3>
 <p><strong>The <code>{parallel}</code> package provides parallel
 versions of base R <code>apply()</code> functions</strong></p>
-<p>We’ll be using the following functions from the
-<code>{parallel}</code> package:</p>
-<ul>
-<li><p><code>detectCores()</code></p></li>
-<li><p><code>mclapply()</code> (forking method)</p></li>
-<li><p><code>parLapply()</code>, <code>makePSockcluster()</code>, and
-<code>clusterEvalQ()</code> (socket method)</p></li>
-</ul>
 <div id="detecting-cores" class="section level4">
 <h4>Detecting cores</h4>
 <p>First, use <code>parallel::detectCores()</code> to determine how many
@@ -1601,7 +1597,7 @@ using computers/servers with many cores available.</em></p>
 <h4><code>lapply()</code> vs. <code>mclapply()</code></h4>
 <p>You may already be familiar with the base R function,
 <code>lapply()</code>, which applies a function over the elements of a
-list or vector. <code>mcapply()</code> is the parallel equivalent! Let’s
+list or vector. <code>mcapply()</code> is the parallel equivalent. Let’s
 test both using our <code>slow_square()</code> function.</p>
 <p>First up, <code>lapply()</code> which takes two arguments, a vector
 <code>X</code> and a function, <code>FUN</code>, to be applied over each
@@ -1616,9 +1612,10 @@ toc()</code></pre>
 <p>Next up is <code>mclapply()</code>, which takes the same first two
 arguments as <code>lapply()</code>, <code>X</code> and <code>FUN</code>.
 We’ll also specify the number of cores to use with
-<code>mc.cores</code>. <strong>REMINDER: <code>mclapply()</code> will
-only work for Mac users. Windows users, see the next section on
-<code>parLapply()</code></strong></p>
+<code>mc.cores</code>. <strong>REMINDER: <code>mclapply()</code> uses
+<em>forking</em>, which will only work for Mac users. Windows users, see
+the next section on <code>parLapply()</code>, which is OS
+agnostic</strong></p>
 <pre class="r"><code>#.................your total number of cores - 1.................
 n_cores &lt;- detectCores() - 1 
 
@@ -1633,8 +1630,9 @@ sec</strong></p>
 </div>
 <div id="parlapply" class="section level4">
 <h4><code>parLapply()</code></h4>
-<p>Windows users will need to use the <code>parLapply()</code> function,
-along with some additional setup:</p>
+<p>Windows users will need to use the <code>parLapply()</code> function
+which uses the <em>socket</em> method. This requires a bit of additional
+setup (Mac users can run this code as well):</p>
 <pre class="r"><code>#......................some necessary setup......................
 cluster &lt;- makePSOCKcluster(n_cores) # make a local cluster (i.e. a collection of cores on our computer)
 clusterEvalQ(cluster, library(&quot;tibble&quot;)) # export necessary pkgs into our cluster 
@@ -1652,8 +1650,60 @@ slower than <code>mclapply()</code> at <strong>2.886 sec</strong></p>
 <div id="iii.-using-the-foreach-package" class="section level3">
 <h3>III. Using the <code>{foreach}</code> package</h3>
 <p><strong>The <code>{foreach}</code> package works on all operating
-systems, and the primary function, <code>foreach()</code> enables you to
-use loops rather than the apply format</strong></p>
+systems and can be implemented using either the forking or socket
+method. The primary function, <code>foreach()</code> enables the use of
+loops rather than the apply format</strong></p>
+<p>Some initial setup is required – first, use the
+<code>parallel:makeCluster()</code> function to define your computer’s
+cluster. Next, register your backend – here we’ll use the
+<code>doParallel</code> package to use <code>parallel</code> as a
+backend (alternatively, you can use the <code>doFuture</code> package to
+use <code>future</code> as a backend)</p>
+<pre class="r"><code>#......................create your cluster.......................
+my_cluster &lt;- parallel::makeCluster(spec = n_cores, type = &quot;FORK&quot;) # default type = &quot;PSOCK&quot;; alt = &quot;FORK&quot;
+
+#............OPTIONAL: check your cluster definition.............
+print(my_cluster)
+
+#............register the parallel processing backend............
+doParallel::registerDoParallel(cl = my_cluster)
+
+#........OPTIONAL: check that your backend is registered.........
+foreach::getDoParRegistered()</code></pre>
+<p>The <code>foreach()</code> syntax is a bit different:</p>
+<p><code>foreach(...) %dopar% {...}</code></p>
+<p>We supply the <code>foreach()</code> function with the values we want
+to iterate over, <code>i</code>. By default, <code>foreach()</code>
+returns results as a list – the <code>.combine</code> argument, allows
+us to specify a function to return results as a different class (here,
+we use <code>bind_rows()</code> to return a tibble). The
+<code>%dopar%</code> operator indicates that the computation will be run
+in parallel and the function we want to apply follows inside
+<code>{}</code>. <strong>Note:</strong> the <code>%do%</code> operator
+can be used in place of <code>%dopar%</code> to revert the expression
+back to serial processing, which may be useful for debugging.</p>
+<pre class="r"><code>tic(&quot;foreach (with parallel backend)&quot;)
+foreach(i = 1:5, .combine = bind_rows) %dopar% {slow_square(i)}
+toc()</code></pre>
+<p><code>foreach()</code>, which ran our code in parallel using the
+socket (<code>PSOCK</code>) method and n-1 cores (for me, that’s 7
+cores), took <strong>0.099 sec</strong>. When using the forking
+(<code>FORK</code>) method, <code>foreach()</code> took
+<strong>0.017</strong> sec. <strong>REMINDER:</strong> you can register
+futures as your backend by using the <code>DoFuture</code>package rather
+than <code>DoParallel</code></p>
+<p>It’s recommended that you stop your cluster once you’re done working
+with it.</p>
+<pre class="r"><code>parallel::stopCluster(cl = my_cluster)</code></pre>
+</div>
+<div id="iv.-other-packages" class="section level3">
+<h3>IV. Other packages</h3>
+<p>Check out Danielle Ferraro’s, talk <a href="https://danielleferraro.github.io/rladies-sb-parallel/#1">A Gentle
+Introduction to Parallel Processing in R</a> to learn more about the
+<code>furrr</code> and <code>future.apply</code> packages, which provide
+parallel versions of <code>purrr:map()</code> and base R
+<code>apply()</code> functions, respectively, both using
+<code>future</code> as a backend.</p>
 </div>
 
 
