@@ -3,9 +3,8 @@ title: "Parallel Processing in R"
 author: Sam Csik
 date: 'April 18, 2022'
 output: 
-  html_document:
+  github_document:
     toc: true
-    toc_float: true
 editor_options: 
   chunk_output_type: console
 ---
