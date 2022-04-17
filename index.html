@@ -261,8 +261,7 @@ Some computer architecture jargon:
 &lt;span style = 'font-size: 80%;'&gt;A case where parallel processing is **not** effective:&lt;/span&gt;
 
 ```r
-# each step depends on the previous step, so they can't be completed simultaneously
-function(a) {
+function(a) { # each step depends on the previous step, so they can't be completed simultaneously
   b &lt;- a + 1
   c &lt;- b + 2
   d &lt;- c + 3
@@ -286,14 +285,49 @@ function(a) {
 &lt;span style = 'font-size: 80%;'&gt;<svg aria-label="Times" role="img" viewBox="0 0 352 512" style="height:1em;width:0.69em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#05859B;overflow:visible;position:relative;"><title>Times</title><path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"/></svg> It may not be efficient. There is computational overhead for setting up, maintaining, and terminating multiple processors -- for small processes, the overhead cost may be greater than the speedup&lt;/span&gt;
 
 ---
-### R packages for parallelization
+### Implementation &amp; R packages for parallelization
 
+&lt;span style = 'font-size: 80%;'&gt;How you implement parallelization is operating system-dependent:&lt;/span&gt;
 
-
+* &lt;span style = 'font-size: 80%;'&gt;There are two ways code can be parallelized: **forking** vs. **sockets**&lt;/span&gt;
+    * &lt;span style = 'font-size: 80%;'&gt;**Forking** is faster, but doesn't work on Windows and *may* cause problems in IDEs&lt;/span&gt;
+    * &lt;span style = 'font-size: 80%;'&gt;**Sockets** are a bit slower, but work across operating systems and in IDEs&lt;/span&gt;
+    
 .footnote[
 &lt;span style = 'font-size: 90%;'&gt;The contents of this slide were adapted from [Danielle Ferraro](https://github.com/danielleferraro)'s talk, [A Gentle Introduction to Parallel Processing in R](https://danielleferraro.github.io/rladies-sb-parallel/#1)&lt;/span&gt;
 ]
 
+--
+
+&lt;span style = 'font-size: 80%;'&gt;There are a number of different approaches for parallelization in R, but they use either the `parallel` package (a base R package) or `future` package (a newer and bit friendlier package) as a *backend*.&lt;/span&gt;
+
+&lt;span style = 'font-size: 80%;'&gt;We'll cover the following packages:&lt;/span&gt;
+
+* &lt;span style = 'font-size: 80%;'&gt;**`parallel`**, which supplies parallel versions of the base R `apply()` functions and can be implemented using either forking (Unix/Linux) or sockets (any OS)&lt;/span&gt;
+* &lt;span style = 'font-size: 80%;'&gt;**`foreach`**, which enables the use of `for` loops in parallel and can be implemented using either forking (Unix/Linux) or sockets (any OS); the `foreach` package is used inconjunction with either `doParallel` or `doFuture`, which allows users to choose their desired backend (i.e. `parallel` vs. `future`)&lt;/span&gt;
+
+--
+
+.center[
+&lt;span style = 'font-size: 90%;'&gt;Check out Danielle Ferraro's, talk [A Gentle Introduction to Parallel Processing in R](https://danielleferraro.github.io/rladies-sb-parallel/#1) to learn more about the `furrr` and `future.apply` packages, which provide parallel versions of `purrr:map()` and base R `apply()` functions, respectively, both using `future` as a backend.&lt;/span&gt;
+]
+
+---
+### What does this have to do with that Amazon EC2 instance we created??
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+.center[
+&lt;span style = 'font-size: 90%;'&gt;While we configured and launched a "Free Tier" instance ~ which includes only 1 core ☹️~ you can configure much more powerful instances (with up to X cores) to run parallelized code.&lt;/span&gt;
+
+&lt;span style = 'font-size: 90%;'&gt;For demonstration purposes, we'll practice parallelizing code on our own multi-core computers (which are still incredibly powerful!).&lt;/span&gt;
+
+&lt;span style = 'font-size: 90%;'&gt;To get started, open up RStudio and create a new RMarkdown (.Rmd) file. You can follow along with me and/or reference the [parallel_processing_KEY.md](https://github.com/UCSB-MEDS/cloud-computing/blob/main/R/parallel_processing_KEY.md) file.&lt;/span&gt;
+]
+
+ 
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>

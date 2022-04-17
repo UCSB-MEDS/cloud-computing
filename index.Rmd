@@ -307,8 +307,7 @@ knitr::include_graphics("media/processing_diagram.png")
 
 <span style = 'font-size: 80%;'>A case where parallel processing is **not** effective:</span>
 ```{r, eval = FALSE}
-# each step depends on the previous step, so they can't be completed simultaneously
-function(a) {
+function(a) { # each step depends on the previous step, so they can't be completed simultaneously
   b <- a + 1
   c <- b + 2
   d <- c + 3
@@ -332,12 +331,47 @@ function(a) {
 <span style = 'font-size: 80%;'>`r fontawesome::fa("times", fill = "#05859B", a11y = "sem")` It may not be efficient. There is computational overhead for setting up, maintaining, and terminating multiple processors -- for small processes, the overhead cost may be greater than the speedup</span>
 
 ---
-### R packages for parallelization
+### Implementation & R packages for parallelization
 
+<span style = 'font-size: 80%;'>How you implement parallelization is operating system-dependent:</span>
 
-
+* <span style = 'font-size: 80%;'>There are two ways code can be parallelized: **forking** vs. **sockets**</span>
+    * <span style = 'font-size: 80%;'>**Forking** is faster, but doesn't work on Windows and *may* cause problems in IDEs</span>
+    * <span style = 'font-size: 80%;'>**Sockets** are a bit slower, but work across operating systems and in IDEs</span>
+    
 .footnote[
 <span style = 'font-size: 90%;'>The contents of this slide were adapted from [Danielle Ferraro](https://github.com/danielleferraro)'s talk, [A Gentle Introduction to Parallel Processing in R](https://danielleferraro.github.io/rladies-sb-parallel/#1)</span>
 ]
 
+--
+
+<span style = 'font-size: 80%;'>There are a number of different approaches for parallelization in R, but they use either the `parallel` package (a base R package) or `future` package (a newer and bit friendlier package) as a *backend*.</span>
+
+<span style = 'font-size: 80%;'>We'll cover the following packages:</span>
+
+* <span style = 'font-size: 80%;'>**`parallel`**, which supplies parallel versions of the base R `apply()` functions and can be implemented using either forking (Unix/Linux) or sockets (any OS)</span>
+* <span style = 'font-size: 80%;'>**`foreach`**, which enables the use of `for` loops in parallel and can be implemented using either forking (Unix/Linux) or sockets (any OS); the `foreach` package is used inconjunction with either `doParallel` or `doFuture`, which allows users to choose their desired backend (i.e. `parallel` vs. `future`)</span>
+
+--
+
+.center[
+<span style = 'font-size: 90%;'>Check out Danielle Ferraro's, talk [A Gentle Introduction to Parallel Processing in R](https://danielleferraro.github.io/rladies-sb-parallel/#1) to learn more about the `furrr` and `future.apply` packages, which provide parallel versions of `purrr:map()` and base R `apply()` functions, respectively, both using `future` as a backend.</span>
+]
+
+---
+### What does this have to do with that Amazon EC2 instance we created??
+
+<br>
+<br>
+<br>
+
+.center[
+<span style = 'font-size: 90%;'>While we configured and launched a "Free Tier" instance ~ which includes only 1 core ☹️~ you can configure much more powerful instances (with up to X cores) to run parallelized code.</span>
+
+<span style = 'font-size: 90%;'>For demonstration purposes, we'll practice parallelizing code on our own multi-core computers (which are still incredibly powerful!).</span>
+
+<span style = 'font-size: 90%;'>To get started, open up RStudio and create a new RMarkdown (.Rmd) file. You can follow along with me and/or reference the [parallel_processing_KEY.md](https://github.com/UCSB-MEDS/cloud-computing/blob/main/R/parallel_processing_KEY.md) file.</span>
+]
+
+ 
 
