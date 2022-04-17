@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, eval = FALS
 
 ### Things to remember before we get started:
 
--   **Use parallel processing when** (a) your task is embarrassingly paralleli.e. if your analysis could easily be separated into many identical but separate tasks that do not rely on one another, and (b) when your tasks are computationally intensive and take time to complete.
+-   **Use parallel processing when** (a) your task is embarrassingly parallel i.e. if your analysis could easily be separated into many identical but separate tasks that do not rely on one another, and (b) when your tasks are computationally intensive and take time to complete.
 
 -   **Do not use parallel processing if** (a) it's not the right tool (e.g. maybe you're memory limited), or (b) it might not be efficient (there is computational overhead for setting up, maintaining, and terminating multiple processors --- for small processes, the overhead cost may be greater than the speedup)
 
@@ -35,11 +35,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, eval = FALS
 #### Install packages (if needed)
 
 ```{r, install packages}
-# install.packages("foreach")
-# install.packages("doParallel")
-# install.packages("furrr") 
-# install.packages("future.apply")
-# install.packages("tictoc")
+# install.packages(c("tictoc", "foreach", "doParallel", "furrr", "future.apply"))
 ```
 
 #### Load packages
@@ -65,6 +61,8 @@ slow_square <- function(x) {
 ```
 
 ### II. Using the `{parallel}` package
+
+**The `{parallel}` package provides parallel versions of base R `apply()` functions**
 
 We'll be using the following functions from the `{parallel}` package:
 
@@ -99,7 +97,7 @@ toc()
 
 `lapply()`, which runs serially using 1 core, took (me) **10.686 sec**
 
-Next up, `mclapply()` which takes the same first two arguments as `lapply()`, `X` and `FUN`. We'll also specify the number of cores to use with `mc.cores`. **REMINDER: `mclapply()` will only work for Mac users. Windows users, see the next section on `parLapply()`**
+Next up is `mclapply()`, which takes the same first two arguments as `lapply()`, `X` and `FUN`. We'll also specify the number of cores to use with `mc.cores`. **REMINDER: `mclapply()` will only work for Mac users. Windows users, see the next section on `parLapply()`**
 
 ```{r, using mclapply}
 #.................your total number of cores - 1.................
@@ -116,7 +114,7 @@ toc()
 
 #### `parLapply()`
 
-Windows users will need to use the `parLapply()` function
+Windows users will need to use the `parLapply()` function, along with some additional setup:
 
 ```{r, eval = FALSE}
 #......................some necessary setup......................
@@ -131,3 +129,9 @@ toc()
 ```
 
 `parLapply()`, which ran our code in parallel using the socket method and n-1 cores (for me, that's 7 cores) was only slightly slower than `mclapply()` at **2.886 sec**
+
+### III. Using the `{foreach}` package
+
+**The `{foreach}` package works on all operating systems, and the primary function, `foreach()` enables you to use loops rather than the apply format**
+
+

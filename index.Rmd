@@ -147,7 +147,7 @@ knitr::include_graphics("media/cloud_platforms.png")
 <span style = 'font-size: 70%;'>Some examples of SaaS applications include [Dropbox](https://www.dropbox.com/), [Slack](https://slack.com/), and [DocuSign](https://www.docusign.com/).</span>
 
 ---
-### An Analogy: Pizza as a Service
+### `r fontawesome::fa("pizza-slice", fill = "#05859B", a11y = "sem")` An Analogy: Pizza as a Service
 
 <br>
 
@@ -256,6 +256,7 @@ class: inverse, middle, center
 .center[
 .center2[
 Big data? Computationally-intensive workflows? Maybe you've been here before...?
+
 ```{r, out.width = '100%', out.height = '100%', echo = FALSE, fig.alt = ""}
 knitr::include_graphics("media/sloth.gif")
 ```
@@ -265,29 +266,78 @@ knitr::include_graphics("media/sloth.gif")
 ---
 ### Consider *parallelization* (aka parallel processing or parallel computing)
 
-<span style = 'font-size: 80%;'>A method where a process is broken up into smaller parts that can then be carried out **simultaneously**, i.e. **in parallel**.</span>
+<span style = 'font-size: 85%;'>A method where a process is broken up into smaller parts that can then be carried out **simultaneously**, i.e. **in parallel**. Traditionally, software is written for **serial processing**. As a default, **R runs serially**.</span>
+
+.footnote[
+<span style = 'font-size: 90%;'>The contents of this slide were adapted from [Danielle Ferraro](https://github.com/danielleferraro)'s talk, [A Gentle Introduction to Parallel Processing in R](https://danielleferraro.github.io/rladies-sb-parallel/#1)</span>
+]
+
+--
+
+.pull-left[
+Some computer architecture jargon:
+
+<span style = 'font-size: 80%;'>`r fontawesome::fa("angle-right", fill = "#05859B", a11y = "sem")` A **core** is the part of your computer's **CPU (central processing unit)** that performs computations (most modern computers have > 1 core)</span>  
+
+
+<span style = 'font-size: 80%;'>`r fontawesome::fa("angle-right", fill = "#05859B", a11y = "sem")` A **process** is a single running task or program (like R) -- each core runs one process at a time</span>   
+
+
+<span style = 'font-size: 80%;'>`r fontawesome::fa("angle-right", fill = "#05859B", a11y = "sem")` A **cluster** refers to a network of computers that work together (each with many cores), but it can also mean the collection of cores on your personal computer</span>
+]
+
+.pull-right[
+```{r, out.width = '100%', out.height = '100%', echo = FALSE, fig.alt = ""}
+knitr::include_graphics("media/CPU.png")
+```
+]
+---
+### Serial vs. Parallel Processing
+
+.center[
+```{r, out.width = '100%', out.height = '100%', echo = FALSE, fig.alt = ""}
+knitr::include_graphics("media/processing_diagram.png")
+```
+]
+
+---
+### `r fontawesome::fa("check", fill = "#05859B", a11y = "sem")` Use parallel processing when:
+
+<span style = 'font-size: 80%;'>`r fontawesome::fa("check", fill = "#05859B", a11y = "sem")` Tasks are [embarrassingly parallel](https://en.wikipedia.org/wiki/Embarrassingly_parallel) i.e. when your analysis can be separated into many identical but separate tasks that do not rely on one another (e.g. bootstrapping, computations by group)</span>
+
+<span style = 'font-size: 80%;'>A case where parallel processing is **not** effective:</span>
+```{r, eval = FALSE}
+# each step depends on the previous step, so they can't be completed simultaneously
+function(a) {
+  b <- a + 1
+  c <- b + 2
+  d <- c + 3
+  return(d)
+}
+```
+
+
+<span style = 'font-size: 80%;'>`r fontawesome::fa("check", fill = "#05859B", a11y = "sem")` Tasks are computationally intensive and take time to complete</span>
 
 .footnote[
 <span style = 'font-size: 80%;'>The contents of this slide were adapted from [Danielle Ferraro](https://github.com/danielleferraro)'s talk, [A Gentle Introduction to Parallel Processing in R](https://danielleferraro.github.io/rladies-sb-parallel/#1)</span>
 ]
 
----
+--
+
+### `r fontawesome::fa("times", fill = "#05859B", a11y = "sem")` Do not use parallel processing when:
+
+<span style = 'font-size: 80%;'>`r fontawesome::fa("times", fill = "#05859B", a11y = "sem")` It may not be the right tool for the job (e.g. maybe you're memory limited)</span>
+
+<span style = 'font-size: 80%;'>`r fontawesome::fa("times", fill = "#05859B", a11y = "sem")` It may not be efficient. There is computational overhead for setting up, maintaining, and terminating multiple processors -- for small processes, the overhead cost may be greater than the speedup</span>
 
 ---
-### Imagine....
-
-Imagine you have a lot of data...some of you may already be familiar with this ;) Your analyses might take a looonnggg time to run on your local computer. 
-
-You can take advantage of more of your computers cores by running your code in parallel (rather than serially, which is R's default). but sometimes you need even MORE processing power.
-
-You can leverage cloud infrastructure to gain access to even greater computing power! (similar to Taylor)
-
-A way to do that is to launch an Amazon EC2 Instance, or *virtual machine* that has many more cores than your own personal computer (similar to Taylor)
+### R packages for parallelization
 
 
 
-
-
-
+.footnote[
+<span style = 'font-size: 90%;'>The contents of this slide were adapted from [Danielle Ferraro](https://github.com/danielleferraro)'s talk, [A Gentle Introduction to Parallel Processing in R](https://danielleferraro.github.io/rladies-sb-parallel/#1)</span>
+]
 
 

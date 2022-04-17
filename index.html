@@ -108,7 +108,7 @@ The buzzword we all hear, but maybe don't quite understand
 &lt;span style = 'font-size: 70%;'&gt;Some examples of SaaS applications include [Dropbox](https://www.dropbox.com/), [Slack](https://slack.com/), and [DocuSign](https://www.docusign.com/).&lt;/span&gt;
 
 ---
-### An Analogy: Pizza as a Service
+### <svg aria-label="Pizza Slice" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#05859B;overflow:visible;position:relative;"><title>Pizza Slice</title><path d="M158.87.15c-16.16-1.52-31.2 8.42-35.33 24.12l-14.81 56.27c187.62 5.49 314.54 130.61 322.48 317l56.94-15.78c15.72-4.36 25.49-19.68 23.62-35.9C490.89 165.08 340.78 17.32 158.87.15zm-58.47 112L.55 491.64a16.21 16.21 0 0 0 20 19.75l379-105.1c-4.27-174.89-123.08-292.14-299.15-294.1zM128 416a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm48-152a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm104 104a32 32 0 1 1 32-32 32 32 0 0 1-32 32z"/></svg> An Analogy: Pizza as a Service
 
 &lt;br&gt;
 
@@ -215,6 +215,7 @@ class: inverse, middle, center
 .center[
 .center2[
 Big data? Computationally-intensive workflows? Maybe you've been here before...?
+
 &lt;img src="media/sloth.gif" width="100%" height="100%" /&gt;
 ]
 ]
@@ -222,30 +223,76 @@ Big data? Computationally-intensive workflows? Maybe you've been here before...?
 ---
 ### Consider *parallelization* (aka parallel processing or parallel computing)
 
-&lt;span style = 'font-size: 80%;'&gt;A method where a process is broken up into smaller parts that can then be carried out **simultaneously**, i.e. **in parallel**.&lt;/span&gt;
+&lt;span style = 'font-size: 85%;'&gt;A method where a process is broken up into smaller parts that can then be carried out **simultaneously**, i.e. **in parallel**. Traditionally, software is written for **serial processing**. As a default, **R runs serially**.&lt;/span&gt;
+
+.footnote[
+&lt;span style = 'font-size: 90%;'&gt;The contents of this slide were adapted from [Danielle Ferraro](https://github.com/danielleferraro)'s talk, [A Gentle Introduction to Parallel Processing in R](https://danielleferraro.github.io/rladies-sb-parallel/#1)&lt;/span&gt;
+]
+
+--
+
+.pull-left[
+Some computer architecture jargon:
+
+&lt;span style = 'font-size: 80%;'&gt;<svg aria-label="angle-right" role="img" viewBox="0 0 256 512" style="height:1em;width:0.5em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#05859B;overflow:visible;position:relative;"><title>angle-right</title><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg> A **core** is the part of your computer's **CPU (central processing unit)** that performs computations (most modern computers have &gt; 1 core)&lt;/span&gt;  
+
+
+&lt;span style = 'font-size: 80%;'&gt;<svg aria-label="angle-right" role="img" viewBox="0 0 256 512" style="height:1em;width:0.5em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#05859B;overflow:visible;position:relative;"><title>angle-right</title><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg> A **process** is a single running task or program (like R) -- each core runs one process at a time&lt;/span&gt;   
+
+
+&lt;span style = 'font-size: 80%;'&gt;<svg aria-label="angle-right" role="img" viewBox="0 0 256 512" style="height:1em;width:0.5em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#05859B;overflow:visible;position:relative;"><title>angle-right</title><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg> A **cluster** refers to a network of computers that work together (each with many cores), but it can also mean the collection of cores on your personal computer&lt;/span&gt;
+]
+
+.pull-right[
+&lt;img src="media/CPU.png" width="100%" height="100%" /&gt;
+]
+---
+### Serial vs. Parallel Processing
+
+.center[
+&lt;img src="media/processing_diagram.png" width="100%" height="100%" /&gt;
+]
+
+---
+### <svg aria-label="Check" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#05859B;overflow:visible;position:relative;"><title>Check</title><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg> Use parallel processing when:
+
+&lt;span style = 'font-size: 80%;'&gt;<svg aria-label="Check" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#05859B;overflow:visible;position:relative;"><title>Check</title><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg> Tasks are [embarrassingly parallel](https://en.wikipedia.org/wiki/Embarrassingly_parallel) i.e. when your analysis can be separated into many identical but separate tasks that do not rely on one another (e.g. bootstrapping, computations by group)&lt;/span&gt;
+
+&lt;span style = 'font-size: 80%;'&gt;A case where parallel processing is **not** effective:&lt;/span&gt;
+
+```r
+# each step depends on the previous step, so they can't be completed simultaneously
+function(a) {
+  b &lt;- a + 1
+  c &lt;- b + 2
+  d &lt;- c + 3
+  return(d)
+}
+```
+
+
+&lt;span style = 'font-size: 80%;'&gt;<svg aria-label="Check" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#05859B;overflow:visible;position:relative;"><title>Check</title><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg> Tasks are computationally intensive and take time to complete&lt;/span&gt;
 
 .footnote[
 &lt;span style = 'font-size: 80%;'&gt;The contents of this slide were adapted from [Danielle Ferraro](https://github.com/danielleferraro)'s talk, [A Gentle Introduction to Parallel Processing in R](https://danielleferraro.github.io/rladies-sb-parallel/#1)&lt;/span&gt;
 ]
 
----
+--
+
+### <svg aria-label="Times" role="img" viewBox="0 0 352 512" style="height:1em;width:0.69em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#05859B;overflow:visible;position:relative;"><title>Times</title><path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"/></svg> Do not use parallel processing when:
+
+&lt;span style = 'font-size: 80%;'&gt;<svg aria-label="Times" role="img" viewBox="0 0 352 512" style="height:1em;width:0.69em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#05859B;overflow:visible;position:relative;"><title>Times</title><path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"/></svg> It may not be the right tool for the job (e.g. maybe you're memory limited)&lt;/span&gt;
+
+&lt;span style = 'font-size: 80%;'&gt;<svg aria-label="Times" role="img" viewBox="0 0 352 512" style="height:1em;width:0.69em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#05859B;overflow:visible;position:relative;"><title>Times</title><path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"/></svg> It may not be efficient. There is computational overhead for setting up, maintaining, and terminating multiple processors -- for small processes, the overhead cost may be greater than the speedup&lt;/span&gt;
 
 ---
-### Imagine....
-
-Imagine you have a lot of data...some of you may already be familiar with this ;) Your analyses might take a looonnggg time to run on your local computer. 
-
-You can take advantage of more of your computers cores by running your code in parallel (rather than serially, which is R's default). but sometimes you need even MORE processing power.
-
-You can leverage cloud infrastructure to gain access to even greater computing power! (similar to Taylor)
-
-A way to do that is to launch an Amazon EC2 Instance, or *virtual machine* that has many more cores than your own personal computer (similar to Taylor)
+### R packages for parallelization
 
 
 
-
-
-
+.footnote[
+&lt;span style = 'font-size: 90%;'&gt;The contents of this slide were adapted from [Danielle Ferraro](https://github.com/danielleferraro)'s talk, [A Gentle Introduction to Parallel Processing in R](https://danielleferraro.github.io/rladies-sb-parallel/#1)&lt;/span&gt;
+]
 
 
     </textarea>

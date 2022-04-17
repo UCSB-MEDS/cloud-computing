@@ -1523,7 +1523,7 @@ some awesome teaching resources!</em></p>
 <h3>Things to remember before we get started:</h3>
 <ul>
 <li><p><strong>Use parallel processing when</strong> (a) your task is
-embarrassingly paralleli.e. if your analysis could easily be separated
+embarrassingly parallel i.e. if your analysis could easily be separated
 into many identical but separate tasks that do not rely on one another,
 and (b) when your tasks are computationally intensive and take time to
 complete.</p></li>
@@ -1549,11 +1549,7 @@ operating systems and in IDEs</p></li>
 <h3>0. Install &amp; load packages</h3>
 <div id="install-packages-if-needed" class="section level4">
 <h4>Install packages (if needed)</h4>
-<pre class="r"><code># install.packages(&quot;foreach&quot;)
-# install.packages(&quot;doParallel&quot;)
-# install.packages(&quot;furrr&quot;) 
-# install.packages(&quot;future.apply&quot;)
-# install.packages(&quot;tictoc&quot;)</code></pre>
+<pre class="r"><code># install.packages(c(&quot;tictoc&quot;, &quot;foreach&quot;, &quot;doParallel&quot;, &quot;furrr&quot;, &quot;future.apply&quot;))</code></pre>
 </div>
 <div id="load-packages" class="section level4">
 <h4>Load packages</h4>
@@ -1577,6 +1573,8 @@ frame, then put R to sleep for 2 seconds.</p>
 </div>
 <div id="ii.-using-the-parallel-package" class="section level3">
 <h3>II. Using the <code>{parallel}</code> package</h3>
+<p><strong>The <code>{parallel}</code> package provides parallel
+versions of base R <code>apply()</code> functions</strong></p>
 <p>We’ll be using the following functions from the
 <code>{parallel}</code> package:</p>
 <ul>
@@ -1615,7 +1613,7 @@ lapply(X = 1:5, FUN = slow_square) %&gt;%
 toc()</code></pre>
 <p><code>lapply()</code>, which runs serially using 1 core, took (me)
 <strong>10.686 sec</strong></p>
-<p>Next up, <code>mclapply()</code> which takes the same first two
+<p>Next up is <code>mclapply()</code>, which takes the same first two
 arguments as <code>lapply()</code>, <code>X</code> and <code>FUN</code>.
 We’ll also specify the number of cores to use with
 <code>mc.cores</code>. <strong>REMINDER: <code>mclapply()</code> will
@@ -1635,8 +1633,8 @@ sec</strong></p>
 </div>
 <div id="parlapply" class="section level4">
 <h4><code>parLapply()</code></h4>
-<p>Windows users will need to use the <code>parLapply()</code>
-function</p>
+<p>Windows users will need to use the <code>parLapply()</code> function,
+along with some additional setup:</p>
 <pre class="r"><code>#......................some necessary setup......................
 cluster &lt;- makePSOCKcluster(n_cores) # make a local cluster (i.e. a collection of cores on our computer)
 clusterEvalQ(cluster, library(&quot;tibble&quot;)) # export necessary pkgs into our cluster 
@@ -1650,6 +1648,12 @@ toc()</code></pre>
 socket method and n-1 cores (for me, that’s 7 cores) was only slightly
 slower than <code>mclapply()</code> at <strong>2.886 sec</strong></p>
 </div>
+</div>
+<div id="iii.-using-the-foreach-package" class="section level3">
+<h3>III. Using the <code>{foreach}</code> package</h3>
+<p><strong>The <code>{foreach}</code> package works on all operating
+systems, and the primary function, <code>foreach()</code> enables you to
+use loops rather than the apply format</strong></p>
 </div>
 
 
