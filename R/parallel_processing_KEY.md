@@ -158,7 +158,7 @@ cluster <- makePSOCKcluster(n_cores) # make a local cluster (i.e. a collection o
 clusterEvalQ(cluster, library("tibble")) # export necessary pkgs into our cluster 
 
 #................parallelize using socket method.................
-tic("parLapply")
+tic("using parLapply()")
 parLapply(cluster, 1:5, slow_square) %>% 
   bind_rows()
 toc()
@@ -210,7 +210,7 @@ revert the expression back to serial processing, which may be useful for
 debugging.
 
 ``` r
-tic("foreach (with parallel backend)")
+tic("using foreach() (with parallel backend)")
 foreach(i = 1:5, .combine = bind_rows) %dopar% {slow_square(i)}
 toc()
 ```

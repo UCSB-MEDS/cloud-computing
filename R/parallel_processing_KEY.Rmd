@@ -115,7 +115,7 @@ cluster <- makePSOCKcluster(n_cores) # make a local cluster (i.e. a collection o
 clusterEvalQ(cluster, library("tibble")) # export necessary pkgs into our cluster 
 
 #................parallelize using socket method.................
-tic("parLapply")
+tic("using parLapply()")
 parLapply(cluster, 1:5, slow_square) %>% 
   bind_rows()
 toc()
@@ -148,7 +148,7 @@ The `foreach()` syntax is a bit different:
 
 We supply the `foreach()` function with the values we want to iterate over, `i`. By default, `foreach()` returns results as a list -- the `.combine` argument, allows us to specify a function to return results as a different class (here, we use `bind_rows()` to return a tibble). The `%dopar%` operator indicates that the computation will be run in parallel and the function we want to apply follows inside `{}`. **Note:** the `%do%` operator can be used in place of `%dopar%` to revert the expression back to serial processing, which may be useful for debugging.
 ```{r}
-tic("foreach (with parallel backend)")
+tic("using foreach() (with parallel backend)")
 foreach(i = 1:5, .combine = bind_rows) %dopar% {slow_square(i)}
 toc()
 ```
