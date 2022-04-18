@@ -153,7 +153,7 @@ foreach(i = 1:5, .combine = bind_rows) %dopar% {slow_square(i)}
 toc()
 ```
 
-`foreach()`, which ran our code in parallel using the socket (`PSOCK`) method and n-1 cores (for me, that's 7 cores), took **0.099 sec**. When using the forking (`FORK`) method, `foreach()` took **0.017** sec. **REMINDER:** you can register futures as your backend by using the `DoFuture`package rather than `DoParallel`
+How long did it take when you used forking (`type = FORK`) vs sockets (`type = PSOCK`) (reminder: only Mac users can use forking)? **Note:** you can register futures as your backend by using the `DoFuture`package rather than `DoParallel`
 
 It's recommended that you stop your cluster once you're done working with it.
 ```{r}
