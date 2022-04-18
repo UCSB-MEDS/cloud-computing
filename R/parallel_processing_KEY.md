@@ -150,7 +150,9 @@ and n-1 cores (for me, that’s 7 cores) took **2.819 sec**
 
 Windows users will need to use the `parLapply()` function which uses the
 *socket* method. This requires a bit of additional setup (Mac users can
-run this code as well):
+run this code as well). The `parLapply()` function takes three main
+arguments: your cluster, `cl`, a vector, `X`, and a function, `FUN`, to
+be applied over each element of `X`
 
 ``` r
 #......................some necessary setup......................
