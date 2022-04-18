@@ -113,7 +113,7 @@ knitr::include_graphics("media/cloud_platforms.png")
 <span style = 'font-size: 70%;'>There are *many* other cloud service providers that offer varying degrees of infrastructure, ease of use, and cost. Check out [DigitalOcean](digitalocean.com), [Kamatera](https://www.kamatera.com/), and [Vultr](https://mamboserver.link/vultr) to start.</span>
 
 ---
-### Cloud Service and Deployment Models
+### Different cloud service and deployment models offer a suite of options to fit client needs
 
 <span style = 'font-size: 80%;'>`r fontawesome::fa("server", fill = "#05859B", a11y = "sem")` **Service Models:** When you work in "the cloud" you're using resources -- including servers, storage, networks, applications, services, (and more!) -- from a very large resource pool that is managed by you or the cloud service provider. Three cloud service models describe to what extent your resources are managed by yourself or by your cloud service providers.</span>
 
