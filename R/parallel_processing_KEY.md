@@ -45,10 +45,11 @@ teaching resources!*
     **sockets** (we’ll explore both below)
 
     -   **forking** = faster but doesn’t work on Windows machines and
-        may cause problems in IDEs
+        may cause problems in IDEs (works by copying the entire current
+        version of R and moving it to a new core)
 
     -   **sockets** = a bit slower but works across operating systems
-        and in IDEs
+        and in IDEs (works by launching a new version of R on each core)
 
 ### 0. Install & load packages
 
@@ -151,8 +152,8 @@ and n-1 cores (for me, that’s 7 cores) took **2.819 sec**
 Windows users will need to use the `parLapply()` function which uses the
 *socket* method. This requires a bit of additional setup (Mac users can
 run this code as well). The `parLapply()` function takes three main
-arguments: your cluster, `cl`, a vector, `X`, and a function, `FUN`, to
-be applied over each element of `X`
+arguments: your cluster, `cl`, a vector, `x`, and a function, `fun`, to
+be applied over each element of `x`
 
 ``` r
 #......................some necessary setup......................
@@ -185,7 +186,7 @@ backend)
 
 ``` r
 #......................create your cluster.......................
-my_cluster <- parallel::makeCluster(spec = n_cores, type = "FORK") # default type = "PSOCK"; alt = "FORK"
+my_cluster <- parallel::makeCluster(spec = n_cores, type = "PSOCK") # default type = "PSOCK"; alt = "FORK"
 
 #............OPTIONAL: check your cluster definition.............
 print(my_cluster)

@@ -25,9 +25,9 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, eval = FALS
 
 -   Parallel code can be implemented in two ways: **forking** or **sockets** (we'll explore both below)
 
-    -   **forking** = faster but doesn't work on Windows machines and may cause problems in IDEs
+    -   **forking** = faster but doesn't work on Windows machines and may cause problems in IDEs (works by copying the entire current version of R and moving it to a new core)
 
-    -   **sockets** = a bit slower but works across operating systems and in IDEs
+    -   **sockets** = a bit slower but works across operating systems and in IDEs (works by launching a new version of R on each core)
 
 ### 0. Install & load packages
 
@@ -107,7 +107,7 @@ toc()
 
 #### `parLapply()`
 
-Windows users will need to use the `parLapply()` function which uses the *socket* method. This requires a bit of additional setup (Mac users can run this code as well). The `parLapply()` function takes three main arguments: your cluster, `cl`, a vector, `X`, and a function, `FUN`, to be applied over each element of `X`
+Windows users will need to use the `parLapply()` function which uses the *socket* method. This requires a bit of additional setup (Mac users can run this code as well). The `parLapply()` function takes three main arguments: your cluster, `cl`, a vector, `x`, and a function, `fun`, to be applied over each element of `x`
 
 ```{r, eval = FALSE}
 #......................some necessary setup......................
@@ -130,7 +130,7 @@ toc()
 Some initial setup is required -- first, use the `parallel:makeCluster()` function to define your computer's cluster. Next, register your backend -- here we'll use the `doParallel` package to use `parallel` as a backend (alternatively, you can use the `doFuture` package to use `future` as a backend)
 ```{r}
 #......................create your cluster.......................
-my_cluster <- parallel::makeCluster(spec = n_cores, type = "FORK") # default type = "PSOCK"; alt = "FORK"
+my_cluster <- parallel::makeCluster(spec = n_cores, type = "PSOCK") # default type = "PSOCK"; alt = "FORK"
 
 #............OPTIONAL: check your cluster definition.............
 print(my_cluster)
