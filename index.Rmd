@@ -366,7 +366,7 @@ function(a) { # each step depends on the previous step, so they can't be complet
 <br>
 
 .center[
-<span style = 'font-size: 90%;'>While we configured and launched a "Free Tier" instance ~ which includes only 1 core ☹️~ you can configure much more powerful instances (with up to X cores) to run parallelized code.</span>
+<span style = 'font-size: 90%;'>While we configured and launched a "Free Tier" instance ~ which includes only 1 core ☹️~ you can configure much more powerful instances (with up to 48 cores) to run parallelized code.</span>
 
 <span style = 'font-size: 90%;'>For demonstration purposes, we'll practice parallelizing code on our own multi-core computers (which are still incredibly powerful!).</span>
 
