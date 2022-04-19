@@ -36,8 +36,7 @@ meta() %>%
   meta_social(
     title = "An Intro to Cloud Computing for Data Science",
     description = paste(
-      "An intro to cloud computing and Amazon EC2",
-      "Presented at R/Medicine 2020."
+      "an intro to cloud computing and Amazon EC2"
     ),
     url = "https://ucsb-meds.github.io/cloud-computing/#1",
     image = "https://ucsb-meds.github.io/cloud-computing/#1/social-card.png",
@@ -54,6 +53,7 @@ meta() %>%
 ```
 
 ```{r xaringanExtra-share-again, echo=FALSE}
+# add share bar to slides
 xaringanExtra::use_share_again()
 ```
 
