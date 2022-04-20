@@ -29,29 +29,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r metathis, echo=FALSE}
-library(metathis)
-meta() %>%
-  meta_name("github-repo" = "UCSB-MEDS/cloud-computing") %>%
-  meta_social(
-    title = "An Intro to Cloud Computing for Data Science",
-    description = paste(
-      "an intro to cloud computing and Amazon EC2"
-    ),
-    url = "https://ucsb-meds.github.io/cloud-computing/#1",
-    image = "https://ucsb-meds.github.io/cloud-computing/#1/social-card.png",
-    image_alt = paste(
-      "A blue slide with the text 'What is cloud computing?'",
-      "Subtext reads 'The buzzword we all hear, but maybe don't quite understand'"
-    ),
-    og_type = "website",
-    og_author = "Samantha Csik",
-    twitter_card_type = "summary_large_image",
-    twitter_creator = "@SamanthaCsik",
-    twitter_site = "@SamanthaCsik"
-  )
-```
-
 ```{r xaringanExtra-share-again, echo=FALSE}
 # add share bar to slides
 xaringanExtra::use_share_again()
