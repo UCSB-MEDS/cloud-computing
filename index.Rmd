@@ -70,7 +70,7 @@ National Center for Ecological Analysis & Synthesis<br>
 
 <span style = 'font-size: 130%;'>Master of Environmental Data Science | Spring 2021</span>   
 
-Slides & source code available on [`r fontawesome::fa("github", fill = "#93C6C2", a11y = "sem")`](https://github.com/UCSB-MEDS/teach-me-how-to-google)
+Slides & source code available on [`r fontawesome::fa("github", fill = "#93C6C2", a11y = "sem")`](https://github.com/UCSB-MEDS/cloud-computing)
 
 ---
 class: inverse, middle, center
